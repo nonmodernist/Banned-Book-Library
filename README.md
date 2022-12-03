@@ -1,3 +1,9 @@
+# Fork of Tiny-Banned-Book-Library
+This fork was created by nonmodernist to track changes needed to install and run the Banned Book Library on Raspberry Pi OS. 
+
+
+Original README info below:
+
 # Tiny-Banned-Book-Library
 Broadcast a digital library of challenged or banned books with a portable anti-censorship e-book server.
 ![Tiny Banned Book Substack Banner](https://user-images.githubusercontent.com/112988379/190521912-a7614490-96fd-4341-af4a-f375befa4771.png)
