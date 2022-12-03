@@ -1,5 +1,27 @@
-sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+****Instructions for installing on Raspberry Pi OS using Debian repo don't copy this line****
 
+sudo apt update
+sudo apt upgrade
+
+wget https://ftp-master.debian.org/keys/archive-key-11.asc  
+
+****Find the path for that file and paste it into the command below****
+
+sudo apt-key add [paste path here]
+
+
+sudo apt update
+sudo nano /etc/apt/sources.list
+
+****Pi Repo settings below don't copy this line****
+
+#Trial Debian repo  
+deb https://deb.debian.org/debian bullseye main contrib non-free
+
+
+
+sudo apt update
+sudo apt install calibre  
 calibre
 
 sudo nano /etc/systemd/system/calibre-server.service 
@@ -14,7 +36,7 @@ After=network.target
 Type=simple
 User=library 
 Group=library
-ExecStart=/usr/bin/calibre-server "/home/USER/Tiny Banned Book Library" 
+ExecStart=/usr/bin/calibre-server "/home/USER/Banned Book Library" 
 
 [Install]
 WantedBy=multi-user.target
@@ -40,8 +62,9 @@ sudo nano /etc/dhcpcd.conf
 ****DHCPD config settings below dont copy this line****
 
 interface wlan0
-    static ip_address=192.168.4.1/24
+    static ip_address=192.168.9.1/24
     nohook wpa_supplicant
+
 
 
 sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
@@ -50,10 +73,10 @@ sudo nano /etc/dnsmasq.conf
 ****DNSmasq config settins done copy this line****
 
 interface=wlan0 # Listening interface
-dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h
+dhcp-range=192.168.9.20,192.168.9.30,255.255.255.0,24h
                 # Pool of IP addresses served via DHCP
 domain=wlan     # Local wireless DNS domain
-address=/#/192.168.4.1
+address=/#/192.168.9.1
                 # Alias for this router
 
 
@@ -69,6 +92,8 @@ hw_mode=g
 channel=7
 macaddr_acl=0
 ignore_broadcast_ssid=0
+
+
 
 sudo systemctl stop systemd-resolved
 sudo nano /etc/rc.local
@@ -276,7 +301,7 @@ FirewallRuleSet users-to-router {
 # the GatewayInterface.  This is the address that the Nodogsplash
 # server listens on.
 #
- GatewayAddress 192.168.4.1
+ GatewayAddress 192.168.9.1
 
 # Parameter: StatusPage
 # Default: status.html
@@ -299,7 +324,7 @@ FirewallRuleSet users-to-router {
 # to their initially requested page. 
 # If RedirectURL is set, the user is redirected to this URL instead.
 # 
-#  RedirectURL http://192.168.4.1:8080
+#  RedirectURL http://192.168.9.1:8080
 
 # Parameter: GatewayPort
 # Default: 2050
@@ -499,11 +524,11 @@ server {
 
 listen 80;
 
-server_name book.server;
+server_name book.library;
 
 location / {
 
-proxy_pass http://192.168.4.1:8080;
+proxy_pass http://192.168.9.1:8080;
 
 }
 
